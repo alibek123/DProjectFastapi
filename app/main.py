@@ -3,8 +3,10 @@ from .routers import meals, categories, users, auth
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine
 from . import models
+from .config import settings
 
 # models.Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI()
 
