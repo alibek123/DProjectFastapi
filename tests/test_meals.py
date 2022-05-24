@@ -103,6 +103,7 @@ def test_unauthorized_user_update_meal(client, test_user, test_meals):
     assert res.status_code == 401
 
 
+
 def test_update_meal_non_exist(authorized_client, test_user, test_meals):
     data = {
         "name": "Чай с молоком updated",

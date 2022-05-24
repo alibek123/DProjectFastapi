@@ -1,3 +1,8 @@
 def test_unauthorized_user_add_to_cart(client, test_user, test_meals):
-    res = client.put(f"/meals/{test_meals[0].id}")
+    res = client.get(f"/cart/")
     assert res.status_code == 401
+
+
+def test_authorized_user_add_to_cart(authorized_client, test_user, test_meals):
+    res = authorized_client.get(f"/cart/")
+    assert res.status_code == 404
