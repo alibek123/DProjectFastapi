@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel, EmailStr
 
@@ -14,6 +14,8 @@ class MealBase(BaseModel):
     description: Optional[str] = None
     available_inventory: int
     category_id: int
+    # image: Optional[str]
+    # thumbnail: Optional[str]
 
 
 class MealCreate(MealBase):
@@ -78,3 +80,40 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[str] = None
+
+
+class ShowCartItems(BaseModel):
+    id: int
+    meals: Meal
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
+class ShowCart(BaseModel):
+    id: int
+    cart_items: List[ShowCartItems] = []
+
+    class Config:
+        orm_mode = True
+
+
+class ShowOrderDetails(BaseModel):
+    id: int
+    order_id: int
+    product_order_details: Meal
+
+    class Config:
+        orm_mode = True
+
+
+class ShowOrder(BaseModel):
+    id: Optional[int]
+    order_date: datetime
+    order_amount: float
+    order_status: str
+    order_details: List[ShowOrderDetails] = []
+
+    class Config:
+        orm_mode = True
