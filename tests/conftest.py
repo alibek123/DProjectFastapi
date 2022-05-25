@@ -46,7 +46,8 @@ def test_user(client):
                  "last_name": "Zhumash",
                  "phone": "7752131533",
                  "password": "admin",
-                 "is_staff": "true"}
+                 "is_staff": "true",
+                 "balance": "10000"}
     res = client.post("/users/", json=user_data)
     assert res.status_code == 201
     new_user = res.json()

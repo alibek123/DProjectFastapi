@@ -10,7 +10,8 @@ def test_create_user(client):
                                        "first_name": "Aruzhan",
                                        "last_name": "Ashimova",
                                        "phone": "7752131533",
-                                       "password": "admin"})
+                                       "password": "admin",
+                                       "balance": "100000"})
     new_user = schema.User(**res.json())
     assert new_user.email == "ashimovazhaan@gmail.com"
     assert res.status_code == 201
