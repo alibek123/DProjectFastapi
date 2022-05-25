@@ -52,6 +52,7 @@ class UserBase(BaseModel):
     last_name: str
     email: EmailStr
     phone: str
+    balance: int
 
 
 class UserCreate(UserBase):

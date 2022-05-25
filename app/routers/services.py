@@ -16,6 +16,9 @@ async def initiate_order(user, db) -> models.Order:
 
     for item in cart_items_objects:
         total_amount += item.meals.price
+    if total_amount > user_info.balance:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Not enough money")
+    user_info.balance -= total_amount
     new_order = models.Order(order_amount=total_amount,
                              customer_id=user_info.id,
                              order_status='COMPLETED')
