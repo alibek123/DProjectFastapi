@@ -80,8 +80,7 @@ async def update_meal(id: int, updated_meal: schema.MealCreate, db: Session = De
 async def get_meal(category_slug: str, db: Session = Depends(get_db)):
     category = db.query(models.Category).filter(models.Category.slug == category_slug).first()
 
-    meal = db.query(models.Meal).filter(models.Meal.category_id == category.id)  # .all()
-    print(meal)
+    meal = db.query(models.Meal).filter(models.Meal.category_id == category.id).all()
     if not meal:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='No such category')
     return meal
