@@ -86,7 +86,9 @@ class TokenData(BaseModel):
 class ShowCartItems(BaseModel):
     id: int
     meals: Meal
+    quantity: int
     created_at: datetime
+    product_id: int
 
     class Config:
         orm_mode = True
@@ -104,6 +106,13 @@ class ShowOrderDetails(BaseModel):
     id: int
     order_id: int
     product_order_details: Meal
+
+    class Config:
+        orm_mode = True
+
+
+class AddToCart(BaseModel):
+    quantity: int
 
     class Config:
         orm_mode = True

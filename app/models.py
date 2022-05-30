@@ -62,6 +62,7 @@ class CartItems(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     cart_id = Column(Integer, ForeignKey("cart.id", ondelete="CASCADE"))
     product_id = Column(Integer, ForeignKey(Meal.id, ondelete="CASCADE"))
+    quantity = Column(Integer, server_default='1', nullable=False)
     cart = relationship("Cart", back_populates="cart_items")
     meals = relationship("Meal", back_populates="cart_items")
     created_at = Column(TIMESTAMP(timezone=False), nullable=False, server_default=text('now()'))

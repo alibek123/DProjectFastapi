@@ -8,16 +8,19 @@ async def initiate_order(user, db) -> models.Order:
     user_info = user.first()
     cart = db.query(models.Cart).filter(models.Cart.user_id == user_info.id).first()
 
-    cart_items_objects = db.query(models.CartItems).filter(models.Cart.id == cart.id)
+    cart_items_objects = db.query(models.CartItems).join(models.Cart).filter(models.Cart.id == cart.id)
+
     if not cart_items_objects.count():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No items in cart")
 
     total_amount = 0.0
 
     for item in cart_items_objects:
-        total_amount += item.meals.price
+        total_amount += (item.meals.price * item.quantity)
+
     if total_amount > user_info.balance:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Not enough money")
+
     user_info.balance -= total_amount
     new_order = models.Order(order_amount=total_amount,
                              customer_id=user_info.id,

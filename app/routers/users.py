@@ -11,6 +11,12 @@ router = APIRouter(
 )
 
 
+@router.get('/', response_model=schema.User)
+async def get_user(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
+    user = current_user.first()
+    return user
+
+
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=schema.User)
 async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     # hash password
@@ -25,7 +31,6 @@ async def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
 
 @router.get('/{id}', response_model=schema.User)
 async def get_user(id: int, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
-    print(id==current_user.first().id)
     if (id != current_user.first().id) and (not current_user.first().is_staff):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='You can only view your information')
 
