@@ -29,6 +29,7 @@ async def add_product_to_cart(product_id: int, quantity: int = 1, db: Session = 
     meal_info = db.query(models.Meal).get(product_id)
     user_info = user.first()
     cart_info = db.query(models.Cart).filter(models.Cart.user_id == user_info.id).first()
+    print(meal_info)
     if meal_info.available_inventory - quantity < 0:
         raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail='Не хватает товара')
     if not cart_info:
