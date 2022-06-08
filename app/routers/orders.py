@@ -25,3 +25,13 @@ async def orders_list(db: Session = Depends(get_db),
     user_info = user.first()
     orders = db.query(models.Order).filter(models.Order.customer_id == user_info.id).all()
     return orders
+
+
+@router.get('/all', status_code=status.HTTP_200_OK, response_model=List[schema.ShowOrder])
+async def all_orders(db: Session = Depends(get_db),
+                     user: int = Depends(oauth2.get_current_user)):
+    if not user.first().is_staff:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='You are not staff')
+
+    orders = db.query(models.Order).all()
+    return orders
