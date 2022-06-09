@@ -127,3 +127,8 @@ class ShowOrder(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class Update_Balance(BaseModel):
+    phone: str
+    balance: int
