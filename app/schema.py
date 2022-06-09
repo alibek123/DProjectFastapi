@@ -105,6 +105,7 @@ class ShowCart(BaseModel):
 class ShowOrderDetails(BaseModel):
     id: int
     order_id: int
+    quantity: int
     product_order_details: Meal
 
     class Config:
